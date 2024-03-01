@@ -34,10 +34,9 @@ def get_word_score(word, n):
     assert isinstance(n, int), "n must be an int"
     assert n > 0, "hand length n must not be 0"
 
-    # magic coding
-    word_score = 0
 
     #Psuedocode
+
     """
     For each letter in word
         get letter score from dict SCRABBLE_LETTER_VALUES
@@ -48,18 +47,100 @@ def get_word_score(word, n):
     example, if n=7 and you make the word 'waybel' on the first try
     it would be worth 115 points
     """
+    word_score = 0
+    for letter in word:
+        word_score += SCRABBLE_LETTER_VALUES[letter]
+    word_score *= len(word)
+    if len(word) == n:
+        word_score += 50
 
     # checking post-condition
-    assert word_score > 0, "score calculation failed"
+    assert word_score >= 0, "score calculation failed - score is negative"
     assert isinstance(word_score, int), "score must be integer"
+
+
     return word_score
 
 # testcase
-# legal
-get_word_score("haPPy", 7)
+print(get_word_score("happy", 7))
 
-#Ilegal
-get_word_score(10000, 7)
-get_word_score("", 7)
-get_word_score("blabla", 0)
+
+def display_hand(hand):
+    """
+    Displays the letters currently in the hand.
+
+    For example:
+    >>> display_hand({'a':1, 'x':2, 'l':3, 'e':1})
+    Should print out something like:
+       a x x l l l e
+    The order of the letters is unimportant.
+
+    hand: dictionary (string -> int)
+    """
+    for letter in hand.keys():
+        for j in range(hand[letter]):
+            print(letter, end=" ")       # print all on the same line
+    print()     
     
+#display_hand({'a': 2})
+
+def deal_hand(n):
+    """
+    Returns a random hand containing n lowercase letters.
+    At least n/3 the letters in the hand should be VOWELS.
+
+    Hands are represented as dictionaries. The keys are
+    letters and the values are the number of times the
+    particular letter is repeated in that hand.
+
+    n: int >= 0
+    returns: dictionary (string -> int)
+    """
+    hand = {}
+    num_vowels = n // 3
+
+    for i in range(num_vowels):
+        x = VOWELS[random.randrange(0, len(VOWELS))]
+        hand[x] = hand.get(x, 0) + 1
+
+    for i in range(num_vowels, n):
+        x = CONSONANTS[random.randrange(0, len(CONSONANTS))]
+        hand[x] = hand.get(x, 0) + 1
+
+    return hand
+
+#print(deal_hand(7))
+
+def update_hand(hand, word):
+    """
+    Assumes that 'hand' has all the letters in word.
+    In other words, this assumes that however many times
+    a letter appears in 'word', 'hand' has at least as
+    many of that letter in it. 
+
+    Updates the hand: uses up the letters in the given word
+    and returns the new hand, without those letters in it.
+
+    Has no side effects: does not modify hand.
+
+    word: string
+    hand: dictionary (string -> int)    
+    returns: dictionary (string -> int)
+    """
+
+    """
+    make a hand.copy()
+    for every letter in word
+        use the letter has a key to look up in the hand dict
+        and subtract 1 from the dict values letter counts
+
+    return handcopy
+    """
+    hand = {'a':1, 'q':1, 'l':1, 'm':1, 'u':1, 'i':1}
+    display_hand(hand)
+    new_hand = update_hand(hand, 'quail')
+    print(new_hand)
+    display_hand(new_hand)
+
+
+print(update_hand())

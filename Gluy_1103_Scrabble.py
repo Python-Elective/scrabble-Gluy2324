@@ -140,10 +140,9 @@ def update_hand(hand, word):
     for letter in word:
         if letter in hand_copy:
             hand_copy[letter] -= 1
-        if hand_copy[letter] == 0:
-            del hand_copy[letter]
-    
+            if hand_copy[letter] == 0:
+                del hand_copy[letter]
     return hand_copy
 
-
+#testcase
 print(update_hand({'k':1, 'e':2, 'y':3}, 'key'))

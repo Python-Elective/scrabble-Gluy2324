@@ -62,7 +62,7 @@ def get_word_score(word, n):
     return word_score
 
 # testcase
-print(get_word_score("happy", 7))
+#print(get_word_score("happy", 7))
 
 
 def display_hand(hand):
@@ -136,11 +136,14 @@ def update_hand(hand, word):
 
     return handcopy
     """
-    hand = {'a':1, 'q':1, 'l':1, 'm':1, 'u':1, 'i':1}
-    display_hand(hand)
-    new_hand = update_hand(hand, 'quail')
-    print(new_hand)
-    display_hand(new_hand)
+    hand_copy = hand.copy()
+    for letter in word:
+        if letter in hand_copy:
+            hand_copy[letter] -= 1
+        if hand_copy[letter] == 0:
+            del hand_copy[letter]
+    
+    return hand_copy
 
 
-print(update_hand())
+print(update_hand({'k':1, 'e':2, 'y':3}, 'key'))

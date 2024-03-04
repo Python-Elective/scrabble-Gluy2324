@@ -9,8 +9,48 @@ SCRABBLE_LETTER_VALUES = {
     'a': 1, 'b': 3, 'c': 3, 'd': 2, 'e': 1, 'f': 4, 'g': 2, 'h': 4, 'i': 1, 'j': 8, 'k': 5, 'l': 1, 'm': 3, 'n': 1, 'o': 1, 'p': 3, 'q': 10, 'r': 1, 's': 1, 't': 1, 'u': 1, 'v': 4, 'w': 4, 'x': 8, 'y': 4, 'z': 10
 }
 
+# -----------------------------------
+# Helper code
+# (you don't need to understand this helper code)
 
-def get_word_score(word, n):
+WORDLIST_FILENAME = "words.txt"
+
+
+def load_words():
+    """
+    Returns a list of valid words. Words are strings of lowercase letters.
+
+    Depending on the size of the word list, this function may
+    take a while to finish.
+    """
+    print("Loading word list from file...")
+    # in_file: file
+    in_file = open(WORDLIST_FILENAME, 'r')
+    # word_list: list of strings
+    word_list = []
+    for line in in_file:
+        word_list.append(line.strip().lower())
+    print("  ", len(word_list), "words loaded.")
+    return word_list
+
+
+def get_frequency_dict(sequence):
+    """
+    Returns a dictionary where the keys are elements of the sequence
+    and the values are integer counts, for the number of times that
+    an element is repeated in the sequence.
+
+    sequence: string or list
+    return: dictionary
+    """
+    # freqs: dictionary (element_type -> int)
+    freq = {}
+    for x in sequence:
+        freq[x] = freq.get(x, 0) + 1
+    return freq
+
+
+def get_word_score(word: str, n: int):
     """
     Returns the score for a word. Assumes the word is a valid word.
 
@@ -28,9 +68,12 @@ def get_word_score(word, n):
 
     # checking pre-cont=dition
     assert isinstance(word, str), "word must be a string"
-    word = word.lower()
-    assert word.islower()
-    assert len(word)
+
+    if len(word) > 0:
+        word = word.lower()
+        assert word.islower()
+        assert len(word)
+        
     assert isinstance(n, int), "n must be an int"
     assert n > 0, "hand length n must not be 0"
 
@@ -62,10 +105,10 @@ def get_word_score(word, n):
     return word_score
 
 # testcase
-#print(get_word_score("happy", 7))
+print(get_word_score("happy", 7))
 
 
-def display_hand(hand):
+def display_hand(hand: dict):
     """
     Displays the letters currently in the hand.
 
@@ -84,7 +127,7 @@ def display_hand(hand):
     
 #display_hand({'a': 2})
 
-def deal_hand(n):
+def deal_hand(n: int):
     """
     Returns a random hand containing n lowercase letters.
     At least n/3 the letters in the hand should be VOWELS.
@@ -111,7 +154,7 @@ def deal_hand(n):
 
 #print(deal_hand(7))
 
-def update_hand(hand, word):
+def update_hand(hand: dict, word: str):
     """
     Assumes that 'hand' has all the letters in word.
     In other words, this assumes that however many times
@@ -146,3 +189,19 @@ def update_hand(hand, word):
 
 #testcase
 print(update_hand({'k':1, 'e':2, 'y':3}, 'key'))
+
+
+
+def is_valid_word(word: str, hand: dict , word_list: list):
+    """
+    Returns True if word is in the word_list and is entirely
+    composed of letters in the hand. Otherwise, returns False.
+
+    Does not mutate hand or word_list.
+
+    word: string
+    hand: dictionary (string -> int)
+    word_list: list of lowercase strings
+    """
+    if word in word_list:
+        return True

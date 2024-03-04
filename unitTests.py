@@ -1,4 +1,4 @@
-from Scrabble import *
+from Gluy_1103_Scrabble import *
 
 #
 # Test code

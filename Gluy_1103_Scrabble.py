@@ -73,7 +73,7 @@ def get_word_score(word: str, n: int):
         word = word.lower()
         assert word.islower()
         assert len(word)
-        
+
     assert isinstance(n, int), "n must be an int"
     assert n > 0, "hand length n must not be 0"
 
@@ -179,6 +179,10 @@ def update_hand(hand: dict, word: str):
 
     return handcopy
     """
+    assert isinstance(hand, dict), "hand must be a dictionary"
+    assert isinstance(word, str), "word must be a string"
+
+
     hand_copy = hand.copy()
     for letter in word:
         if letter in hand_copy:

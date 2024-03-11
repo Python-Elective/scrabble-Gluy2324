@@ -126,8 +126,8 @@ def display_hand(hand: dict):
     print()     
     
 #display_hand({'a': 2})
-
-def deal_hand(n: int):
+    
+def deal_hand(n):
     """
     Returns a random hand containing n lowercase letters.
     At least n/3 the letters in the hand should be VOWELS.
@@ -196,7 +196,7 @@ print(update_hand({'k':1, 'e':2, 'y':3}, 'key'))
 
 
 
-def is_valid_word(word: str, hand: dict , word_list: list):
+def is_valid_word(word: str, hand: dict , word_list: list) -> bool:
     """
     Returns True if word is in the word_list and is entirely
     composed of letters in the hand. Otherwise, returns False.
@@ -207,5 +207,20 @@ def is_valid_word(word: str, hand: dict , word_list: list):
     hand: dictionary (string -> int)
     word_list: list of lowercase strings
     """
-    if word in word_list:
-        return True
+    #checking pre condition
+    word : str
+    #    "hello".count('l')     ans = 2
+
+    if word not in word_list:
+        return False
+
+    hand_copy = hand.copy()
+
+    for letter in word:
+        if letter in hand_copy and hand_copy[letter] > 0:
+            hand_copy[letter] -= 1
+        else:
+            return False
+    
+    return True
+    

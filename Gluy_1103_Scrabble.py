@@ -105,7 +105,7 @@ def get_word_score(word: str, n: int):
     return word_score
 
 # testcase
-print(get_word_score("happy", 7))
+#print(get_word_score("happy", 7))
 
 
 def display_hand(hand: dict):
@@ -192,7 +192,7 @@ def update_hand(hand: dict, word: str):
     return hand_copy
 
 #testcase
-print(update_hand({'k':1, 'e':2, 'y':3}, 'key'))
+#print(update_hand({'k':1, 'e':2, 'y':3}, 'key'))
 
 
 
@@ -251,9 +251,9 @@ def calculate_hand_len(hand : dict):
     len_hand = sum(hand.values())
     return len_hand
 
-print(calculate_hand_len({'h':1, 'e':1, 'l':2, 'o':1})) #ans = 5
+#print(calculate_hand_len({'h':1, 'e':1, 'l':2, 'o':1})) #ans = 5
 
-def play_hand(hand, word_list, n):
+def play_hand(hand : dict, word_list, n):
     """
     Allows the user to play the given hand, as follows:
 
@@ -277,27 +277,46 @@ def play_hand(hand, word_list, n):
     """
     # BEGIN PSEUDOCODE <-- Remove this comment when you code this function; do your coding within the pseudocode (leaving those comments in-place!)
     # Keep track of the total score
-
     # As long as there are still letters left in the hand:
-
     # Display the hand
-
     # Ask user for input
-
     # If the input is a single period:
-
     # End the game (break out of the loop)
-
     # Otherwise (the input is not a single period):
-
     # If the word is not valid:
-
     # Reject invalid word (print a message followed by a blank line)
-
     # Otherwise (the word is valid):
-
     # Tell the user how many points the word earned, and the updated total score, in one line followed by a blank line
-
     # Update the hand
-
     # Game is over (user entered a '.' or ran out of letters), so tell user the total score
+
+    total_score = 0
+    period = " "
+    while True:
+        hand = deal_hand(n)
+        length_hand = calculate_hand_len(hand)
+
+        if length_hand > 0:
+            print("Current Hand:" + display_hand(hand))
+        word = input('Enter word, or a "." to indicate that you are finished: ')
+        word_score = get_word_score(word, n)
+
+        print_total_score = str(total_score) + "points."
+        print_word_score = str(word_score) + "points."
+
+        if word == ".":
+            print("Goodbye! Total score:" + print_total_score)
+        else:
+            if period in word:
+                print("the input is not a single period")
+                break
+            else:
+                if is_valid_word(word, hand, word_list) != True:
+                    print("Invalid word, please try again." + "\n")
+                else:
+                    total_score += word_score
+                    print('"' + word + '" earned' + print_word_score + print_total_score + "\n")
+
+
+
+

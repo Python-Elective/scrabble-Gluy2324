@@ -372,7 +372,7 @@ def play_game(word_list):
             print("Invalid command. Please enter 'n', 'r', or 'e'.")
 
 
-#
+
 # Build data structures used for entire session and play game
 #
 if __name__ == '__main__':

@@ -295,6 +295,8 @@ def play_hand(hand : dict, word_list : list, n : int):
 
     while True:
         length_hand = calculate_hand_len(hand)
+        
+
         if length_hand > 0:
             print("Current Hand:", "", end="")
             display_hand(hand)
@@ -312,17 +314,23 @@ def play_hand(hand : dict, word_list : list, n : int):
             print("Invalid word, please try again." + "\n")
         else:
             word_score = get_word_score(word, n)
+
             print_word_score = str(word_score) + " points."
+
+
             total_score += word_score
-            print_total_score = "total: "+ str(total_score) + " points."
+            print_total_score = "Total score: "+ str(total_score) + " points."
+
+
             print('"' + word + '" earned ' + print_word_score + " " + print_total_score + "\n")
             hand = update_hand(hand, word)
 
-            if length_hand < 0:
-                print("Run out of letters. Total score:" + print_total_score + "\n")
-                break
+            length_hand = calculate_hand_len(hand)
 
-    return total_score
+            if length_hand == 0:
+                print("Run out of letters. " + print_total_score + "\n")
+                break
+        
 
 
 

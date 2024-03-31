@@ -153,7 +153,7 @@ def deal_hand(n):
 
     return hand
 
-#print(deal_hand(7))
+print(deal_hand(7))
 
 def update_hand(hand: dict, word: str):
     """
@@ -296,7 +296,7 @@ def play_hand(hand : dict, word_list : list, n : int):
     while True:
         length_hand = calculate_hand_len(hand)
         if length_hand > 0:
-            print("Current Hand:", " ", end="")
+            print("Current Hand:", "", end="")
             display_hand(hand)
 
         print_total_score = " total: "+ str(total_score) + " points."
@@ -318,7 +318,55 @@ def play_hand(hand : dict, word_list : list, n : int):
             print('"' + word + '" earned ' + print_word_score + " " + print_total_score + "\n")
             hand = update_hand(hand, word)
 
+            if length_hand < 0:
+                print("Run out of letters. Total score:" + print_total_score + "\n")
+                break
+
+    return total_score
 
 
-word_list = load_words()
-play_hand({'h':1, 'i':1, 'c':1, 'z':1, 'm':2, 'a':1}, word_list , 7)
+
+#word_list = load_words()
+#play_hand({'h':1, 'i':1, 'c':1, 'z':1, 'm':2, 'a':1}, word_list , 7)
+
+
+
+def play_game(word_list):
+    """
+    Allow the user to play an arbitrary number of hands.
+
+    1) Asks the user to input 'n' or 'r' or 'e'.
+      * If the user inputs 'n', let the user play a new (random) hand.
+      * If the user inputs 'r', let the user play the last hand again.
+      * If the user inputs 'e', exit the game.
+      * If the user inputs anything else, tell them their input was invalid.
+
+    2) When done playing the hand, repeat from step 1    
+    """
+    # TO DO ... <-- Remove this comment when you code this function
+    # <-- Remove this line when you code the function
+    hand = None
+    n = int(input("Choose how many letters you want in your hand: "))
+    while True:
+        choice = input("Enter n to deal a new hand, r to replay the last hand, or e to end game: ")
+
+        if choice == "n":
+            hand = deal_hand(n)
+            play_hand(hand, word_list, n)
+        elif choice == "r": 
+            if hand == None:
+                print("You have not played a hand yet. Please play a new hand first!\n")
+            else:
+                play_hand(hand, word_list, n)
+        elif choice == "e":
+            break
+        else:
+            print("Invalid command. Please enter 'n', 'r', or 'e'.")
+
+
+#
+# Build data structures used for entire session and play game
+#
+if __name__ == '__main__':
+    word_list = load_words()
+    play_game(word_list)

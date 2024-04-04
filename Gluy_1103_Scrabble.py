@@ -351,8 +351,7 @@ def play_game(word_list):
 
     2) When done playing the hand, repeat from step 1    
     """
-    # TO DO ... <-- Remove this comment when you code this function
-    # <-- Remove this line when you code the function
+    
     hand = None
     n = int(input("Choose how many letters you want in your hand: "))
     while True:

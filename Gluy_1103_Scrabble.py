@@ -153,7 +153,7 @@ def deal_hand(n):
 
     return hand
 
-print(deal_hand(7))
+#print(deal_hand(7))
 
 def update_hand(hand: dict, word: str):
     """
